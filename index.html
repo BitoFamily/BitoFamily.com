@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BitoFamily — Where Learning Gets Super Fun!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & base ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:        #0F172A;
+      --bg-mid:         #1E293B;
+      --bg-card:        #1E293B;
+      --bg-card-light:  #334155;
+      --primary:        #22D3EE;
+      --primary-light:  #67E8F9;
+      --primary-dark:   #0E7490;
+      --coco-primary:   #06B6D4;
+      --coco-secondary: #0EA5E9;
+      --kato-primary:   #F43F5E;
+      --kato-secondary: #F97316;
+      --sona-primary:   #A855F7;
+      --sona-secondary: #6366F1;
+      --accent-yellow:  #FFD600;
+      --accent-green:   #10B981;
+      --text-primary:   #E2E8F0;
+      --text-secondary: #94A3B8;
+      --text-muted:     #64748B;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Floating math symbols background ─────────────────── */
+    .floaters {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floater {
+      position: absolute;
+      font-size: clamp(1rem, 3vw, 2.5rem);
+      opacity: 0.08;
+      animation: floatUp linear infinite;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+      10%  { opacity: 0.08; }
+      90%  { opacity: 0.08; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Main layout ───────────────────────────────────────── */
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.5rem 5rem;
+      gap: 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Header / Hero ─────────────────────────────────────── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--coco-primary), var(--primary));
+      color: var(--bg-deep);
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      box-shadow: 0 0 20px var(--coco-primary);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 16px var(--coco-primary); }
+      50%       { box-shadow: 0 0 36px var(--primary-light); }
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      background: linear-gradient(120deg,
+        var(--primary-light) 0%,
+        var(--primary) 30%,
+        var(--coco-secondary) 60%,
+        var(--accent-yellow) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.35));
+      animation: shimmer 4s linear infinite;
+      background-size: 200% auto;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+      font-weight: 700;
+      color: var(--text-secondary);
+      max-width: 540px;
+    }
+
+    .hero-tagline span {
+      color: var(--primary);
+    }
+
+    /* ── Coco section ──────────────────────────────────────── */
+    .coco-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .coco-wrapper {
+      position: relative;
+      width: clamp(180px, 40vw, 280px);
+    }
+
+    .coco-glow {
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--coco-primary) 0%, transparent 70%);
+      opacity: 0.35;
+      animation: glow-pulse 2.5s ease-in-out infinite;
+      filter: blur(12px);
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.25; transform: scale(0.95); }
+      50%       { opacity: 0.5;  transform: scale(1.08); }
+    }
+
+    .coco-img {
+      position: relative;
+      width: 100%;
+      border-radius: 50%;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 24px var(--coco-primary));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(-2deg); }
+      50%       { transform: translateY(-18px) rotate(2deg); }
+    }
+
+    .coco-label {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--coco-primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── About card ────────────────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-light);
+      border-radius: 24px;
+      padding: 2.5rem 2.5rem;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--coco-primary), var(--primary-light), var(--sona-primary));
+    }
+
+    .card-title {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+    .card-title .emoji {
+      display: inline-block;
+      animation: wiggle 2s ease-in-out infinite;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25%       { transform: rotate(-12deg); }
+      75%       { transform: rotate(12deg); }
+    }
+
+    .card-body {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      font-weight: 700;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    .card-body strong {
+      color: var(--text-primary);
+    }
+
+    /* ── Coming-soon app card ──────────────────────────────── */
+    .app-card {
+      background: linear-gradient(135deg, #0a1628, #112035);
+      border: 2px solid var(--coco-primary);
+      border-radius: 24px;
+      padding: 2.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(6, 182, 212, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .coming-soon-badge {
+      background: linear-gradient(135deg, var(--kato-primary), var(--kato-secondary));
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.5);
+      animation: badge-blink 2s ease-in-out infinite;
+    }
+
+    @keyframes badge-blink {
+      0%, 100% { box-shadow: 0 0 12px rgba(244, 63, 94, 0.4); }
+      50%       { box-shadow: 0 0 28px rgba(249, 115, 22, 0.7); }
+    }
+
+    .app-card-name {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 900;
+      background: linear-gradient(120deg, var(--primary-light), var(--coco-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .app-card-desc {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      font-weight: 700;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .stars-row {
+      font-size: 1.8rem;
+      letter-spacing: 0.25em;
+      animation: star-bounce 1.5s ease-in-out infinite;
+    }
+
+    @keyframes star-bounce {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.18); }
+    }
+
+    /* ── More coming section ───────────────────────────────── */
+    .more-card {
+      background: var(--bg-mid);
+      border: 1px solid var(--bg-card-light);
+      border-radius: 24px;
+      padding: 2.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .more-title {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 900;
+      color: var(--text-primary);
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .pill {
+      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      border: 2px solid;
+      animation: pill-float ease-in-out infinite;
+    }
+
+    .pill:nth-child(1) { color: var(--coco-primary); border-color: var(--coco-primary); animation-duration: 2.8s; animation-delay: 0s; }
+    .pill:nth-child(2) { color: var(--kato-primary); border-color: var(--kato-primary); animation-duration: 3.2s; animation-delay: 0.4s; }
+    .pill:nth-child(3) { color: var(--sona-primary); border-color: var(--sona-primary); animation-duration: 2.5s; animation-delay: 0.8s; }
+    .pill:nth-child(4) { color: var(--accent-yellow); border-color: var(--accent-yellow); animation-duration: 3.5s; animation-delay: 1.1s; }
+    .pill:nth-child(5) { color: var(--accent-green); border-color: var(--accent-green); animation-duration: 2.9s; animation-delay: 0.2s; }
+
+    @keyframes pill-float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    .more-desc {
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      font-weight: 700;
+      color: var(--text-muted);
+      max-width: 460px;
+      line-height: 1.75;
+    }
+
+    /* ── Footer ────────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Responsive tweaks ─────────────────────────────────── */
+    @media (min-width: 640px) {
+      .hero { gap: 2rem; }
+      .card { padding: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating background symbols -->
+  <div class="floaters" aria-hidden="true"></div>
+
+  <main class="page">
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <div class="logo-badge">✦ BitoFamily.com ✦</div>
+      <h1 class="hero-title">Bito&shy;Family</h1>
+      <p class="hero-tagline">
+        A family of <span>super-smart, super-fun</span> apps built to make kids
+        absolutely fall in love with learning. 🚀
+      </p>
+    </section>
+
+    <!-- ── Coco ── -->
+    <div class="coco-section">
+      <div class="coco-wrapper">
+        <div class="coco-glow"></div>
+        <img class="coco-img" src="coco.png" alt="Coco the Puppy-Bot, mascot of BitoFamily" />
+      </div>
+      <p class="coco-label">⚡ Meet Coco ⚡</p>
+    </div>
+
+    <!-- ── About ── -->
+    <article class="card">
+      <h2 class="card-title"><span class="emoji">🏠</span> What is BitoFamily?</h2>
+      <p class="card-body">
+        <strong>BitoFamily</strong> is a squad of playful robot characters — Coco, Kato, and Sona —
+        who LOVE helping kids explore the world of <strong>numbers, science, and creativity!</strong>
+        <br /><br />
+        We're building a whole universe of apps where every tap, every answer, and every
+        "AHA!" moment feels like a <strong>mini adventure.</strong> No boring textbooks here —
+        only <strong>neon colours, epic sound effects, and high-fives from your robot pals!</strong>
+        <br /><br />
+        Whether you're 4 or 10, there's a Bito buddy waiting just for you. 🐾✨
+      </p>
+    </article>
+
+    <!-- ── Bito Math coming soon ── -->
+    <article class="app-card">
+      <span class="coming-soon-badge">🔥 Coming Soon</span>
+      <h2 class="app-card-name">Bito Math</h2>
+      <p class="app-card-desc">
+        Our <strong style="color:var(--primary);">very first app</strong> is almost here!
+        Race against the clock, answer math questions, and watch Coco cheer you on with
+        glowing eyes and happy dances. ➕ ✖️ ➖ ÷
+        <br /><br />
+        Get ready to become a <strong style="color:var(--accent-yellow);">Math Champion!</strong>
+      </p>
+      <div class="stars-row">⭐ ⭐ ⭐</div>
+    </article>
+
+    <!-- ── More coming ── -->
+    <article class="more-card">
+      <h2 class="more-title">🌈 And There's WAY More Coming…</h2>
+      <div class="pills">
+        <span class="pill">🔬 Bito Science</span>
+        <span class="pill">📖 Bito Reading</span>
+        <span class="pill">🎵 Bito Music</span>
+        <span class="pill">🌍 Bito World</span>
+        <span class="pill">🎨 Bito Art</span>
+      </div>
+      <p class="more-desc">
+        The BitoFamily is growing fast! New bots, new worlds, and new brain-tickling games
+        are already cooking in the lab. <strong style="color:var(--primary)">Stay tuned</strong>
+        — it's going to be EPIC. 🚀💫
+      </p>
+    </article>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <p>Made with 💙 by the BitoFamily team &nbsp;·&nbsp; <a href="https://bitofamily.com">bitofamily.com</a></p>
+    </footer>
+
+  </main>
+
+  <script>
+    // Spawn floating math/emoji symbols
+    const symbols = ['+', '−', '×', '÷', '=', '?', '!', '★', '1', '2', '3', '7', '∞', '🎉', '⭐', '🔢', '💡', '🏆'];
+    const container = document.querySelector('.floaters');
+
+    for (let i = 0; i < 30; i++) {
+      const el = document.createElement('span');
+      el.className = 'floater';
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (12 + Math.random() * 18) + 's';
+      el.style.animationDelay = (Math.random() * 20) + 's';
+      el.style.fontSize = (1 + Math.random() * 2) + 'rem';
+      container.appendChild(el);
+    }
+  </script>
+
+</body>
+</html>
